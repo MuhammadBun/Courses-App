@@ -1,7 +1,9 @@
 # education_app
 
-## This is Flutter app  , With beutiful UI but without any backend..
-
+```sh
+This is a Flutter app that features a beautiful user interface for displaying courses. However, it does not have a backend. The app is designed to provide an engaging and visually appealing way for users to browse and learn about different courses. With its sleek design and intuitive navigation, users can easily find the information they need and enjoy a seamless learning experience. 😊
+```
+how can i add an icon of  django and python ?## Features
 # Take a look : 
 
 <table>
