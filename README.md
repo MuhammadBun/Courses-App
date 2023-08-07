@@ -1,5 +1,5 @@
 # education_app
-
+> ### Note: 
 ```sh
 This is a Flutter app that features a beautiful user interface for displaying courses.
 However, it does not have a backend. The app is designed to provide an engaging and visually
