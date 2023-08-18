@@ -13,7 +13,6 @@ class CourseCard extends StatelessWidget {
             width: 230,
             height: 350,
             decoration: BoxDecoration(
-              color: Colors.red,
               borderRadius: BorderRadius.circular(20),
             ),
             child: ClipRRect(
@@ -28,7 +27,7 @@ class CourseCard extends StatelessWidget {
             width: 230,
             height: 350,
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withOpacity(0.7),
               borderRadius: BorderRadius.circular(20),
             ),
           ),
@@ -59,6 +58,15 @@ class CourseCard extends StatelessWidget {
               ),
             ),
           ),
+          MaterialButton(
+            onPressed: () {},
+            minWidth: 230,
+             highlightColor: Colors.black.withOpacity(0.4),
+            height: 350,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          )
         ],
       ),
     );

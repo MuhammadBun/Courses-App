@@ -69,6 +69,19 @@ class RelatedCard extends StatelessWidget {
                     fontWeight: FontWeight.w900),
               ),
             ),
+            Container(
+              margin: EdgeInsets.only(
+                left: 20,
+              ),
+              child: MaterialButton(
+                highlightColor: Colors.black.withOpacity(0.4),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                onPressed: () {},
+                minWidth: 180,
+                height: 180,
+              ),
+            )
           ],
         ),
         Container(

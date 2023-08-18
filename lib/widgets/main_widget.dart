@@ -1,6 +1,6 @@
 import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
 import 'package:education_app/widgets/pages/courses/bottom_navigation.dart';
-import 'package:education_app/widgets/pages/courses/my_courses.dart';
+ 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
@@ -16,10 +16,20 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   ScrollController scrollController = ScrollController();
-  BottomBarWithSheetController? _bottomBarController =
-      BottomBarWithSheetController(initialIndex: 1);
+  TabController? _tabController;
+  bool isIndex = true;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+    _tabController!.addListener(() {
+      setState(() {
+        isIndex = _tabController!.index == 0;
+      });
+    });
+  }
 
   double index = 0;
   int count = 0;
@@ -35,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
             child: Container(
               margin: const EdgeInsets.only(top: 20),
               child: AppBar(
-                backgroundColor: Colors.transparent,
+                backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
                 title: Container(
                   margin: const EdgeInsets.only(bottom: 15),
                   child: Row(
@@ -77,14 +87,14 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 bottom: TabBar(
                     indicator: MaterialIndicator(
-                        height: 5,
+                        paintingStyle: PaintingStyle.fill,
+                        height: 3,
                         topLeftRadius: 5,
                         topRightRadius: 5,
                         bottomLeftRadius: 5,
                         bottomRightRadius: 5,
-                        horizontalPadding: 35,
                         tabPosition: TabPosition.bottom,
-                        color: const Color(0xff2EAFBE)),
+                        color: Colors.grey),
                     tabs: const [
                       Tab(
                         child: Text(
@@ -108,7 +118,7 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             TabBarView(children: [
               SingleChildScrollView(
-                child: AvilableCourses(),
+          
                 controller: scrollController,
               ),
               Center(
@@ -122,7 +132,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ]),
             Positioned(
-              top: MediaQuery.of(context).size.height-250,
+              top: MediaQuery.of(context).size.height - 250,
               left: 130,
               child: Container(
                 alignment: Alignment.center,
@@ -152,7 +162,6 @@ class _MainScreenState extends State<MainScreen> {
                                 : Color.fromARGB(255, 37, 37, 37))),
                     IconButton(
                         onPressed: () {
-                          
                           themeChange.darkTheme = !themeChange.darkTheme;
                         },
                         icon: Icon(Icons.dark_mode,
@@ -165,68 +174,75 @@ class _MainScreenState extends State<MainScreen> {
             )
           ],
         ),
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InkWell(
-              onTap: () {
-                scrollController.animateTo(0,
-                    duration: Duration(milliseconds: 400), curve: Curves.ease);
-              },
-              child: Container(
-                alignment: Alignment.center,
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.grey,
-                ),
-                child: Icon(
-                  Icons.arrow_upward_sharp,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            InkWell(
-              onTap: () {
-                if (count == 0) {
-                  scrollController.animateTo(700,
-                      duration: Duration(milliseconds: 600),
-                      curve: Curves.ease);
-                  count = count + 1;
-                } else if (count == 1) {
-                  scrollController.animateTo(
-                      scrollController.position.maxScrollExtent,
-                      duration: Duration(milliseconds: 600),
-                      curve: Curves.ease);
-                  count = count + 1;
-                } else {
-                  index = 0;
-                  scrollController.animateTo(0,
-                      duration: Duration(milliseconds: 600),
-                      curve: Curves.ease);
-                  count = 0;
-                }
-              },
-              child: Container(
-                alignment: Alignment.center,
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.grey,
-                ),
-                child: Icon(
-                  Icons.arrow_downward_sharp,
-                  color: Colors.white,
-                ),
-              ),
-            )
-          ],
-        ),
+        floatingActionButton: isIndex
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MaterialButton(
+                    splashColor: Colors.black,
+                    hoverColor: Colors.white,
+                    focusColor: Colors.white,
+                    highlightColor: Colors.white.withOpacity(0.4),
+                    onPressed: () {
+                      scrollController.animateTo(0,
+                          duration: Duration(milliseconds: 400),
+                          curve: Curves.ease);
+                    },
+                    color: Colors.grey,
+                    minWidth: 10,
+                    height: 40,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Icon(
+                      Icons.arrow_upward_sharp,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  MaterialButton(
+                    splashColor: Colors.black,
+                    hoverColor: Colors.white,
+                    focusColor: Colors.white,
+                    highlightColor: Colors.white.withOpacity(0.4),
+                    onPressed: () {
+                      if (count == 1) {
+                        scrollController.animateTo(700,
+                            duration: Duration(milliseconds: 600),
+                            curve: Curves.ease);
+                        setState(() {
+                          count = count + 1;
+                        });
+                      } else if (count == 2) {
+                        scrollController.animateTo(
+                            scrollController.position.maxScrollExtent,
+                            duration: Duration(milliseconds: 600),
+                            curve: Curves.ease);
+                        count = count + 1;
+                      } else {
+                        index = 1;
+                        scrollController.animateTo(0,
+                            duration: Duration(milliseconds: 600),
+                            curve: Curves.ease);
+                        setState(() {
+                          count = 1;
+                        });
+                      }
+                    },
+                    color: Colors.grey,
+                    minWidth: 10,
+                    height: 40,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Icon(
+                      Icons.arrow_downward_sharp,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              )
+            : Container(),
       ),
     );
   }
